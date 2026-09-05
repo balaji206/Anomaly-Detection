@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/*
+  Design tokens — "mission control for a fleet of weather stations."
+  Dark instrument-panel base. Two accent colors carry real meaning, not decoration:
+  teal = nominal/normal sensor data, amber = flagged anomaly. Two type families only:
+  Space Grotesk for headings/labels, IBM Plex Mono for every number and data readout.
+*/
+@theme {
+  --color-bg: #0b1220;
+  --color-surface: #111a2e;
+  --color-surface-alt: #182544;
+  --color-border: #253352;
+  --color-text: #e7ecf5;
+  --color-muted: #7e8ca6;
+  --color-accent: #4fd1c5;
+  --color-accent-dim: #2f5f5a;
+  --color-warn: #f2a65a;
+  --color-warn-dim: #6b4a29;
+  --color-danger: #e8590c;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-accent-dim);
+}
+
+/* Thin, quiet scrollbars fit the instrument-panel feel better than default chunky ones */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 4px;
+}
