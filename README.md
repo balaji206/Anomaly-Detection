@@ -249,167 +249,119 @@ Repository:
 
 # Backend Setup
 
-Open a terminal in the project root and enter the backend:
+Open a terminal window and navigate to the `backend` folder:
 
 ```bash
 cd backend
 ```
 
-## 1. Create a Python virtual environment
+### Step 1: Create & Activate Virtual Environment
 
-Windows PowerShell:
+- **Windows (PowerShell)**:
+  ```powershell
+  py -m venv venv
+  .\venv\Scripts\Activate.ps1
+  ```
+  *(If execution policy prevents script activation, run: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process`)*
 
-```powershell
-python -m venv venv
-```
+- **Linux / macOS**:
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
 
-Activate it:
-
-```powershell
-.\venv\Scripts\Activate.ps1
-```
-
-If PowerShell blocks script execution, use the Python environment activation method configured on your machine or run the backend with the virtual environment's Python executable directly.
-
-Linux/macOS:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-## 2. Install dependencies
+### Step 2: Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 3. Configure environment variables
+### Step 3: Configure Environment File
 
-Copy the example environment file to a local `.env` file.
+Copy `.env.example` to create your local `.env`:
 
-Windows PowerShell:
+- **Windows (PowerShell)**:
+  ```powershell
+  Copy-Item .env.example .env
+  ```
+- **Linux / macOS**:
+  ```bash
+  cp .env.example .env
+  ```
 
-```powershell
-Copy-Item .env.example .env
-```
+*(Optionally open `.env` and add your `NVIDIA_API_KEY` for live AI explanations from NVIDIA NIM).*
 
-Linux/macOS:
+### Step 4: Seed Demo Data & Train Models
 
-```bash
-cp .env.example .env
-```
-
-Open `.env` and fill in the values required by the project.
-
-**Do not commit `.env`.**
-
-The repository intentionally provides `.env.example` as the safe template for teammates.
-
-## 4. Database / Demo Data
-
-The backend contains the local database and a demo-data seed script.
-
-If the project requires regenerating demo data, inspect and run:
+Seed the database with 48 hours of simulated station telemetry and train per-station Isolation Forest models:
 
 ```bash
 python scripts/seed_demo_data.py
 ```
 
-Run this only when appropriate for the current database state. Avoid repeatedly reseeding a database if doing so would duplicate or overwrite data.
-
-## 5. Start the backend
-
-From the `backend` directory:
+### Step 5: Start Backend API Server
 
 ```bash
 uvicorn app.main:app --reload --port 8000
 ```
 
-The backend should then be available on:
-
-```text
-http://localhost:8000
-```
-
-FastAPI's interactive API documentation is normally available at:
-
-```text
-http://localhost:8000/docs
-```
-
-The exact host/port can be changed according to the backend configuration.
+The backend server runs on `http://localhost:8000`.  
+Interactive API docs are available at **`http://localhost:8000/docs`**.
 
 ---
 
 # Frontend Setup
 
-Open a second terminal.
-
-From the project root:
+Open a **second terminal window** and navigate to the `frontend` folder:
 
 ```bash
 cd frontend
 ```
 
-## 1. Install dependencies
+### Step 1: Configure Environment File
+
+Copy `.env.example` to create your local `.env`:
+
+- **Windows (PowerShell)**:
+  ```powershell
+  Copy-Item .env.example .env
+  ```
+- **Linux / macOS**:
+  ```bash
+  cp .env.example .env
+  ```
+
+*(By default, `VITE_API_BASE_URL` points to `http://localhost:8000`).*
+
+### Step 2: Install Dependencies
 
 ```bash
 npm install
 ```
 
-The repository contains `package-lock.json`, so using npm is recommended for the frontend.
-
-## 2. Configure environment variables
-
-Copy the example environment file:
-
-Windows PowerShell:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-Linux/macOS:
-
-```bash
-cp .env.example .env
-```
-
-Set the backend API URL according to the variables documented in `frontend/.env.example`.
-
-Do not commit the real `.env` file.
-
-## 3. Start the frontend
+### Step 3: Start Frontend Development Server
 
 ```bash
 npm run dev
 ```
 
-Vite will display the local development URL in the terminal, commonly:
-
-```text
-http://localhost:5173
-```
-
-Open the URL shown by Vite in your browser.
+The frontend dashboard will run on **`http://localhost:5173`**. Open this URL in your web browser.
 
 ---
 
-# Running the Complete Application
+# Quick-Start Summary (Running Both Together)
 
-You normally need two terminals.
+To run the complete application, keep two terminals open:
 
 ### Terminal 1 — Backend
-
 ```powershell
 cd backend
 .\venv\Scripts\Activate.ps1
+python scripts/seed_demo_data.py
 uvicorn app.main:app --reload --port 8000
 ```
 
 ### Terminal 2 — Frontend
-
 ```powershell
 cd frontend
 npm install

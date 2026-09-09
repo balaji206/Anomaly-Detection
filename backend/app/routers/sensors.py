@@ -23,6 +23,17 @@ def get_readings(station_id: str, hours: int = 24, db: Session = Depends(get_db)
         .all()
     )
 
+    # Fallback: if no readings exist within the requested `hours` window, fetch the most recent readings
+    if not readings:
+        readings = (
+            db.query(models.SensorReading)
+            .filter(models.SensorReading.station_id == station.id)
+            .order_by(models.SensorReading.timestamp.desc())
+            .limit(hours * 12)
+            .all()
+        )
+        readings = sorted(readings, key=lambda r: r.timestamp)
+
     return {
         "station_id": station.code,
         "readings": [
