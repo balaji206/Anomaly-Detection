@@ -2,26 +2,42 @@
 
 FastAPI + Isolation Forest + NVIDIA NIM. Runs entirely locally with SQLite — **no cloud, Docker, or Postgres setup required for the demo.**
 
-## 1. Setup (one-time)
+## 1. Setup & Installation
 
+### Step 1: Create and activate virtual environment
+- **Windows (PowerShell)**:
+  ```powershell
+  py -m venv venv
+  .\venv\Scripts\Activate.ps1
+  ```
+- **Linux / macOS**:
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+### Step 2: Install dependencies
 ```bash
-python3 -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
 pip install -r requirements.txt
-cp .env.example .env            # then optionally add your NVIDIA_API_KEY inside
 ```
 
-## 2. Seed demo data
+### Step 3: Create environment config
+- **Windows (PowerShell)**:
+  ```powershell
+  Copy-Item .env.example .env
+  ```
+- **Linux / macOS**:
+  ```bash
+  cp .env.example .env
+  ```
 
-This generates 48 hours of realistic simulated sensor data for 3 stations, trains an Isolation Forest per station, and populates the database with real detected anomalies — so your dashboard has data the moment you open it.
+## 2. Seed demo data & train models
 
 ```bash
 python scripts/seed_demo_data.py
 ```
 
-Re-run this any time you want to reset/refresh the demo data (it's additive, so delete `aws_anomaly.db` first if you want a clean slate).
-
-## 3. Run the API
+## 3. Run the Backend API
 
 ```bash
 uvicorn app.main:app --reload --port 8000

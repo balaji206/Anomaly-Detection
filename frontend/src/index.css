@@ -1,53 +1,94 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
-/*
-  Design tokens — "mission control for a fleet of weather stations."
-  Dark instrument-panel base. Two accent colors carry real meaning, not decoration:
-  teal = nominal/normal sensor data, amber = flagged anomaly. Two type families only:
-  Space Grotesk for headings/labels, IBM Plex Mono for every number and data readout.
-*/
 @theme {
-  --color-bg: #0b1220;
-  --color-surface: #111a2e;
-  --color-surface-alt: #182544;
-  --color-border: #253352;
-  --color-text: #e7ecf5;
-  --color-muted: #7e8ca6;
-  --color-accent: #4fd1c5;
-  --color-accent-dim: #2f5f5a;
-  --color-warn: #f2a65a;
-  --color-warn-dim: #6b4a29;
-  --color-danger: #e8590c;
+  --color-bg: #0b0c0e;
+  --color-surface: rgba(22, 24, 29, 0.75);
+  --color-surface-hover: rgba(30, 34, 42, 0.85);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-bright: rgba(255, 255, 255, 0.16);
+  --color-text: #f3f4f6;
+  --color-muted: #9ca3af;
+  
+  --color-accent: #6366f1;
+  --color-accent-bright: #818cf8;
+  --color-warn: #d97706;
+  --color-danger: #e11d48;
 
-  --font-display: "Space Grotesk", sans-serif;
-  --font-mono: "IBM Plex Mono", monospace;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
 html, body, #root {
   height: 100%;
+  margin: 0;
+  overflow: hidden;
 }
 
+/* Linear / Raycast Style Clean Dark Graphite Base */
 body {
-  background-color: var(--color-bg);
+  background-color: #0b0c0e;
   color: var(--color-text);
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  position: relative;
+  contain: paint;
 }
 
-::selection {
-  background-color: var(--color-accent-dim);
+/* Human-designed Refined Card Utilities */
+.glass-liquid {
+  background: rgba(22, 24, 29, 0.75);
+  backdrop-filter: blur(12px) saturate(140%);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 
+    0 4px 20px -2px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+  will-change: transform;
 }
 
-/* Thin, quiet scrollbars fit the instrument-panel feel better than default chunky ones */
+.glass-liquid-hover:hover {
+  background: rgba(30, 34, 42, 0.85);
+  border-color: rgba(255, 255, 255, 0.16);
+  transform: translate3d(0, -1px, 0);
+}
+
+/* Leaflet Dark Map Tile Invert and Custom Dark Styles */
+.dark-map .leaflet-tile-pane {
+  filter: brightness(0.72) invert(100%) hue-rotate(180deg) saturate(140%) contrast(105%);
+  will-change: transform;
+}
+
+.dark-map .leaflet-container {
+  background-color: #0b0c0e !important;
+}
+
+.dark-map .leaflet-popup-content-wrapper,
+.dark-map .leaflet-popup-tip {
+  background: rgba(22, 24, 29, 0.95) !important;
+  color: #f3f4f6 !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6) !important;
+}
+
+/* Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: var(--color-border);
-  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+

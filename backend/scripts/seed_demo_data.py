@@ -31,6 +31,11 @@ def seed():
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
     try:
+        # Clear old readings and anomalies to refresh demo stream to current time
+        db.query(models.Anomaly).delete()
+        db.query(models.SensorReading).delete()
+        db.commit()
+
         for s in STATIONS:
             station = db.query(models.Station).filter(models.Station.code == s["code"]).first()
             if not station:

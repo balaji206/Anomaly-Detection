@@ -2,22 +2,32 @@
 
 React + TypeScript + Tailwind CSS v4 + Recharts. Built to match your backend's API contract exactly — point it at your running FastAPI server and it works with zero config changes.
 
-## 1. Setup
+## 1. Setup & Installation
 
+### Step 1: Copy environment file
+- **Windows (PowerShell)**:
+  ```powershell
+  Copy-Item .env.example .env
+  ```
+- **Linux / macOS**:
+  ```bash
+  cp .env.example .env
+  ```
+
+### Step 2: Install dependencies
 ```bash
 npm install
-cp .env.example .env    # only edit this if your backend isn't on localhost:8000
 ```
 
-## 2. Run
+## 2. Run Frontend Development Server
 
-Make sure your backend is running first (`uvicorn app.main:app --reload --port 8000` in the backend folder), then:
+Ensure your backend is running (`uvicorn app.main:app --reload --port 8000`), then start the frontend:
 
 ```bash
 npm run dev
 ```
 
-Open the URL it prints (usually `http://localhost:5173`).
+Open the URL shown in the terminal (default: `http://localhost:5173`).
 
 ## 3. What's already verified working
 
